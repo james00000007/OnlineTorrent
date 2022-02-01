@@ -58,7 +58,7 @@ function addTorrentToList(torr) {
                 let urlsuffix = "/?";
                 urlsuffix += `uri=${uriEncode(torr.Magnet)}`;
                 // let res = window.location.origin + urlsuffix;
-                window.location.href = urlsuffix;
+                window.open(urlsuffix);
             });
         $("#deletetorrent")
             .unbind("click")

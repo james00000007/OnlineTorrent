@@ -4,9 +4,12 @@
 
 右上角上传 torrent，或者输入磁力链接、种子下载链接开始使用。在左侧导航栏查看种子当前的下载信息。
 
-### 新功能
+### 变化
 
--   0.0.1-HappyNewYear 新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.1-HappyNewYear%2Fassets%2Fmd%2Fsupporttable.md)
+详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
+
+-   0.0.2-HappyNewYear 新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.2-HappyNewYear%2Fassets%2Fmd%2Fsupporttable.md)
+-   修复了有概率无法下载文件的 bug
 
 ### 注意事项
 

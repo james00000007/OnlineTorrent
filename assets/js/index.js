@@ -184,7 +184,7 @@ function addList(file, clickfunc) {
             });
         file.getStreamURL(function (err, url) {
             if (err) return log(err.message);
-            $("#download-file").attr({ download: file.name, href: url });
+            $("#download-file").attr({ href: url });
         });
         clickfunc();
     });
