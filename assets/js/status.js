@@ -48,7 +48,7 @@ function addTorrentToList(torr) {
             .click(function () {
                 $("#download-info").text(filesize(torr.ConnStatus.BytesRead));
                 $("#upload-info").text(filesize(torr.ConnStatus.BytesWritten));
-                $("#peer-info").text(`Total: ${torr.TotalPeers} | Pending: ${torr.PendingPeers} | Active: ${torr.ActivePeers}`);
+                $("#peer-info").text(`${torr.TotalPeers} | ${torr.PendingPeers} | ${torr.ActivePeers}`);
                 $("#open-drawer")[0].click();
                 $("#torrent-info")[0].click();
             });
