@@ -6,7 +6,7 @@
 
 ### 新功能
 
--   0.0.1 新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.1%2Fassets%2Fmd%2Fsupporttable.md)
+-   0.0.1-HappyNewYear 新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.1-HappyNewYear%2Fassets%2Fmd%2Fsupporttable.md)
 
 ### 注意事项
 
