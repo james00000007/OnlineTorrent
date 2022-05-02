@@ -8,7 +8,9 @@
 
 版本 0.0.3-1: 详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
 
--   新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.3-1%2Fassets%2Fmd%2Fsupporttable.md)
+版本 0.0.3-fix: 由于不明原因 webtorrent 版本大于 1.8.8 时无法获取 metadata，紧急更改版本修复
+
+-   新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.3-fix%2Fassets%2Fmd%2Fsupporttable.md)
 -   修复了 cdn 源错误，修复了显示不全
 
 ### 注意事项
