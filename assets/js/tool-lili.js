@@ -30,7 +30,7 @@ function getQueryVariable(variable) {
 function loadMarkdown() {
     $("[mdtarget]").each(function () {
         let e = $(this);
-        if (e.attr("mdsource") != typeof undefined) {
+        if (e.attr("mdsource") != undefined) {
             $.get(e.attr("mdsource"), function (result) {
                 $(e.attr("mdtarget"))
                     .empty()
