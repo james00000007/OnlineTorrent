@@ -6,11 +6,11 @@
 
 ### 变化
 
-版本 0.0.5-always-download: 详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
+版本 0.0.7: 详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
 
 -   测试优先下载首尾，减小了播放等待时间
 -   更改依赖，修复了难以获取元数据的问题
--   新增对部分流媒体格式的支持，[格式列表](/markdown?source=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fdarknightlab%2Fwww.lili.ac%400.0.5-always-download%2Fassets%2Fmd%2Fsupporttable.md)
+-   新增对部分流媒体格式的支持，[格式列表](/markdown?source=%2Fassets%2Fmd%2Fsupporttable.md)
 -   修复了 cdn 源错误，修复了显示不全
 
 ### 注意事项
