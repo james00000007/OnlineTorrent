@@ -251,6 +251,9 @@ function sendURIToAll(uri) {
             }
         );
     }
+    if (okflag == 0) {
+        startMagnet(uri, onTorrent);
+    }
 }
 
 function deleteTorrentInAll(hash) {
