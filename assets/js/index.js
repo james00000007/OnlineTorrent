@@ -93,6 +93,13 @@ function onTorrent(torrent) {
             '.torrent">[下载 .torrent]</a>'
     );
 
+    // 优先下载首尾，获取播放时长
+    let priority = 10;
+    torrent.files.forEach(function (file) {
+        torrent.select(file._endPiece, file._endPiece, priority);
+        torrent.select(file._startPiece, file._startPiece, priority);
+    });
+
     // Render all files into to the page
     torrent.files.forEach(function (file) {
         if (isExt(file.name, videoExt)) {
