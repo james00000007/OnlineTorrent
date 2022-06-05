@@ -235,11 +235,13 @@ function sendURIToAll(uri) {
                     }
                 } else {
                     log("请求发送失败[200]: " + serverURL[i]);
+                    startMagnet(uri, onTorrent);
                 }
             },
             function (e) {
                 if (okflag == 0) {
                     log("请求发送失败: " + serverURL[i]);
+                    startMagnet(uri, onTorrent);
                 }
             }
         );

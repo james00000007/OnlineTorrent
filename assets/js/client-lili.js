@@ -7,14 +7,14 @@ const webseedSuffix = "?hash=k5Znwdx3&download=1";
 const client = new WebTorrent();
 
 function startMagnet(magnet, onTorrent) {
-    // client.add(
-    //     magnet,
-    //     {
-    //         announce: trackerURL,
-    //     },
-    //     onTorrent
-    // );
-    client.add(magnet, onTorrent);
+    client.add(
+        magnet,
+        {
+            announce: trackerURL,
+        },
+        onTorrent
+    );
+    // client.add(magnet, onTorrent);
 }
 
 function getDownloadInfo(file) {
