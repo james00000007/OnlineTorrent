@@ -1,4 +1,4 @@
-const serverURL = ["https://sg1-server.darknight.tech", "/"];
+const serverURL = ["https://sg1-server.darknight.tech/", "/"];
 
 const loopTime = 2000;
 
