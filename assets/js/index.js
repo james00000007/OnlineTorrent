@@ -104,7 +104,7 @@ function onTorrent(torrent) {
         .unbind("click")
         .click(function (e) {
             webseedPrefix.forEach((prefix) => {
-                let webseedURL = prefix + encodeURIComponent(file.path) + webseedSuffix;
+                let webseedURL = prefix + encodeURIComponent(torrent.name) + webseedSuffix;
                 torrent.addWebSeed(webseedURL);
             });
             log("已启用webseed");
