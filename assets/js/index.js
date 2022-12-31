@@ -238,8 +238,8 @@ function sendURIToAll(uri) {
                         log("请求发送成功");
                         log("已添加种子，磁力链接为: " + '<a href="' + result.magnet + '" target="_blank">[磁力链接]</a> ');
                         startMagnet(result.magnet, onTorrent);
-                        webseedPrefix.push(serverURL[i] + "webseed/");
                     }
+                    webseedPrefix.push(serverURL[i] + "webseed/");
                 } else {
                     log("请求发送失败[200]: " + serverURL[i]);
                 }
