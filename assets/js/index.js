@@ -103,8 +103,10 @@ function onTorrent(torrent) {
     $("#enable-webseed")
         .unbind("click")
         .click(function (e) {
-            let webseedURL = webseedPrefix + encodeURIComponent(file.path) + webseedSuffix;
-            torrent.addWebSeed(webseedURL);
+            webseedPrefix.forEach((prefix) => {
+                let webseedURL = prefix + encodeURIComponent(file.path) + webseedSuffix;
+                torrent.addWebSeed(webseedURL);
+            });
             log("已启用webseed");
         });
     $("#disable-webseed")
