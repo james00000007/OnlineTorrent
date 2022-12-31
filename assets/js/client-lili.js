@@ -1,6 +1,6 @@
 const trackerURL = ["wss://tracker.lili.ac", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
-const webseedPrefix = "https://webseed.lili.ac/";
+let webseedPrefix = [];
 
 const webseedSuffix = "?hash=k5Znwdx3&download=1";
 

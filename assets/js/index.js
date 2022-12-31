@@ -1,4 +1,4 @@
-const serverURL = ["/server/1/", "/server/2/", "/server/3/", "/"];
+const serverURL = ["https://sg1-server.darknight.tech", "/"];
 
 const loopTime = 2000;
 
@@ -100,6 +100,24 @@ function onTorrent(torrent) {
         torrent.select(file._startPiece, file._startPiece, priority);
     });
 
+    $("#enable-webseed")
+        .unbind("click")
+        .click(function (e) {
+            let webseedURL = webseedPrefix + encodeURIComponent(file.path) + webseedSuffix;
+            torrent.addWebSeed(webseedURL);
+            log("已启用webseed");
+        });
+    $("#disable-webseed")
+        .unbind("click")
+        .click(function (e) {
+            torrent.wires.forEach(function (wire) {
+                if (wire.type == "webSeed") {
+                    wire.destroy();
+                }
+            });
+            log("已禁用webseed");
+        });
+
     // Render all files into to the page
     torrent.files.forEach(function (file) {
         if (isExt(file.name, videoExt)) {
@@ -168,27 +186,6 @@ function addList(file, clickfunc) {
                     peerip.append(li);
                 });
             });
-        $("#enable-webseed")
-            .unbind("click")
-            .click(function (e) {
-                if (file._torrent.files.length == 1) {
-                    let webseedURL = webseedPrefix + encodeURIComponent(file.path) + wenseedSuffix;
-                    file._torrent.addWebSeed(webseedURL);
-                    log("已启用webseed");
-                } else {
-                    log("多文件种子暂不支持webseed");
-                }
-            });
-        $("#disable-webseed")
-            .unbind("click")
-            .click(function (e) {
-                file._torrent.wires.forEach(function (wire) {
-                    if (wire.type == "webSeed") {
-                        wire.destroy();
-                    }
-                });
-                log("已禁用webseed");
-            });
         file.getStreamURL(function (err, url) {
             if (err) return log(err.message);
             $("#download-file").attr({ href: url });
@@ -239,6 +236,7 @@ function sendURIToAll(uri) {
                         log("请求发送成功");
                         log("已添加种子，磁力链接为: " + '<a href="' + result.magnet + '" target="_blank">[磁力链接]</a> ');
                         startMagnet(result.magnet, onTorrent);
+                        webseedPrefix.push(serverURL[i] + "webseed/");
                     }
                 } else {
                     log("请求发送失败[200]: " + serverURL[i]);
