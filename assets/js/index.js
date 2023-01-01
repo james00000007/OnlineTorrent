@@ -112,11 +112,11 @@ function onTorrent(torrent) {
     $("#disable-webseed")
         .unbind("click")
         .click(function (e) {
-            torrent.wires.forEach(function (wire) {
-                if (wire.type == "webSeed") {
-                    wire.destroy();
+            for (let i = torrent.wires.length - 1; i >= 0; i--) {
+                if (torrent.wires[i].type == "webSeed") {
+                    torrent.wires[i].destroy();
                 }
-            });
+            }
             log("已禁用webseed");
         });
 
