@@ -123,7 +123,7 @@ function onTorrent(torrent) {
     // Render all files into to the page
     torrent.files.forEach(function (file) {
         if (isExt(file.name, videoExt)) {
-            addList(file, function () {
+            let li = addList(file, function () {
                 $("#video")[0].oncanplay = function () {
                     $("#video").css("aspect-ratio", "");
                 };
@@ -133,6 +133,10 @@ function onTorrent(torrent) {
                 $("#video-title").text(file.name);
                 $(document).attr("title", file.name);
             });
+            // 自动播放
+            if ($("#video-area").hasClass("mdui-hidden")) {
+                li.click();
+            }
         } else if (isExt(file.name, imageExt)) {
             addList(file, function () {
                 $("#other-file").empty();
@@ -195,6 +199,7 @@ function addList(file, clickfunc) {
         clickfunc();
     });
     $("#file-list").append(li);
+    return li;
 }
 
 function uploadTorrentToAll(file) {
