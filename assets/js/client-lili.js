@@ -2,7 +2,7 @@ const trackerURL = ["wss://tracker.lili.ac", "wss://tracker.btorrent.xyz", "wss:
 
 let webseedPrefix = [];
 
-const webseedSuffix = "?hash=k5Znwdx3&download=1";
+const webseedSuffix = "";
 
 const client = new WebTorrent();
 
