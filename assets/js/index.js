@@ -107,7 +107,14 @@ function onTorrent(torrent) {
 
     function enableWebseed() {
         webseedPrefix.forEach((prefix) => {
-            let webseedURL = prefix + encodeURIComponent(torrent.name) + webseedSuffix;
+            let webseedURL;
+            if (torrent.files.length == 1 && torrent.files[0].name == torrent.files[0].path) {
+                // 如果这是一个单文件种子, 不带文件夹
+                webseedURL = prefix + encodeURIComponent(torrent.files[0].name);
+            } else {
+                // 文件夹种子
+                webseedURL = prefix;
+            }
             torrent.addWebSeed(webseedURL);
         });
         log("已启用webseed");

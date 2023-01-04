@@ -2,8 +2,6 @@ const trackerURL = ["wss://tracker.lili.ac", "wss://tracker.btorrent.xyz", "wss:
 
 let webseedPrefix = [];
 
-const webseedSuffix = "";
-
 const client = new WebTorrent();
 
 function startMagnet(magnet, onTorrent) {
