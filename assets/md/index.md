@@ -6,7 +6,11 @@
 
 ### 变化
 
-版本 0.0.8: 详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
+版本 0.1.0: 详细内容请移步[github](https://github.com/darknightlab/www.lili.ac)
+
+-   新增了种子详细进度条; 自动开启 webseed;
+
+历史变化:
 
 -   测试优先下载首尾，减小了播放等待时间
 -   更改依赖，修复了难以获取元数据的问题
