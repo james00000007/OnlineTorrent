@@ -2,6 +2,8 @@ const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-serv
 
 const loopTime = 2000;
 
+const progressBarSplits = 200;
+
 var printInfo;
 
 $("#uri").keydown(function (e) {
@@ -52,6 +54,7 @@ initPage();
 function initPage() {
     loadMarkdown();
     loadShareURL();
+    setProgressBar();
     loadServiceWorker();
 }
 
@@ -135,7 +138,10 @@ function onTorrent(torrent) {
             });
             // 自动播放
             if ($("#video-area").hasClass("mdui-hidden")) {
-                li.click();
+                // 两秒后点击
+                setTimeout(function () {
+                    li.click();
+                }, 2000);
             }
         } else if (isExt(file.name, imageExt)) {
             addList(file, function () {
@@ -155,16 +161,70 @@ function onTorrent(torrent) {
     });
 }
 
+function setProgressBar() {
+    for (let i = 0; i < progressBarSplits; i++) {
+        let d = document.createElement("div");
+        d.setAttribute("class", "progress-item");
+        document.getElementById("progress-bar").appendChild(d);
+    }
+}
+
+function updateProgressBar(file) {
+    let bar = document.getElementById("progress-bar");
+    let startPiece = file._startPiece;
+    let endPiece = file._endPiece;
+    let piecePerSegment = (endPiece + 1 - startPiece) / progressBarSplits;
+    let pieceNumber = startPiece;
+    for (let i = 0; i < progressBarSplits; i++) {
+        let segment = bar.children.item(i);
+        if (segment.classList.contains("progress-color-complete")) {
+            pieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
+            continue;
+        }
+        let hasNotReady = false;
+        let hasReady = false;
+        while (pieceNumber < startPiece + piecePerSegment * (i + 1)) {
+            if (file._torrent.pieces[pieceNumber] == null) {
+                // 说明已经下载完
+                hasReady = true;
+            } else {
+                hasNotReady = true;
+            }
+            if (hasReady && hasNotReady) {
+                break;
+            }
+            pieceNumber++;
+        }
+        if (hasReady && hasNotReady) {
+            // 下到一半
+            segment.setAttribute("class", "progress-item progress-color-half");
+            pieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
+        } else if (hasReady) {
+            // 下完了
+            segment.setAttribute("class", "progress-item progress-color-complete");
+        }
+    }
+}
+
+function resetProgressBar() {
+    let bar = document.getElementById("progress-bar");
+    for (let i = 0; i < bar.children.length; i++) {
+        bar.children.item(i).setAttribute("class", "progress-item");
+    }
+}
+
 function addList(file, clickfunc) {
     $("#file-list-area").removeClass("mdui-hidden");
     let li = $(`<li class="mdui-list-item mdui-ripple">` + file.name + `</li>`);
     li.click(function () {
         clearInterval(printInfo);
+        resetProgressBar();
         printInfo = setInterval(function () {
             $("#download-info").text(getDownloadInfo(file));
             $("#upload-info").text(getUploadInfo(file));
             $("#peer-info").text(getPeerInfo(file));
             $("#progress-info").text(getProgressInfo(file));
+            updateProgressBar(file);
         }, loopTime);
         $("#delete-torrent")
             .unbind("click")

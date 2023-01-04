@@ -42,6 +42,7 @@
     </script>
 
     <style type="text/css">
+        /* markdown 绿色 */
         .mdui-collapse-item-body .mdui-list-item {
             padding-left: 36px !important;
         }
@@ -57,6 +58,37 @@
         .markdown-body {
             --color-accent-fg: #4caf50;
             --color-accent-emphasis: #4caf50;
+        }
+
+        /* torrent进度条 */
+        .progress-segment {
+            display: flex;
+            margin-bottom: 0;
+        }
+
+        .progress-item {
+            width: 100%;
+            background-color: lightgray;
+            margin-right: 0px;
+            height: 3px;
+        }
+
+        .progress-item:first-child {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+
+        .progress-item:last-child {
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .progress-item.progress-color-half {
+            background: #1873e2 !important;
+        }
+
+        .progress-item.progress-color-complete {
+            background: #4caf50 !important;
         }
     </style>
 </head>
@@ -160,6 +192,8 @@
 
                 <!-- 介绍 -->
                 <div id="introduce-area" class="mdui-grid-tile mdui-p-a-1">
+                    <div class="progress-segment" id="progress-bar">
+                    </div>
                     <!-- <div id="introduce-content" class="markdown-body mdui-p-a-4 mdui-card" style="border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 4px"></div> -->
                     <div id="introduce-content" class="markdown-body mdui-p-a-3 mdui-card"></div>
                 </div>
