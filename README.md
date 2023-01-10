@@ -1,3 +1,3 @@
-# www.acg.blog
+# www.kawaii.id
 
-pages of www.acg.blog
+pages of www.kawaii.id

@@ -1,12 +1,12 @@
 # 新年快乐
 
-## 这里是 [acg.blog](https://www.acg.blog)
+## 这里是 [kawaii.id](https://www.kawaii.id)
 
 右上角上传 torrent，或者输入磁力链接、种子下载链接开始使用。在左侧导航栏查看种子当前的下载信息。
 
 ### 变化
 
-版本 0.1.0: 详细内容请移步[github](https://github.com/darknightlab/www.acg.blog)
+版本 0.1.0: 详细内容请移步[github](https://github.com/darknightlab/www.kawaii.id)
 
 -   新增了种子详细进度条; 自动开启 webseed;
 
@@ -30,4 +30,4 @@
 -   [Webtorrent](https://github.com/webtorrent/webtorrent)
 -   [anacrolix/torrent](https://github.com/anacrolix/torrent)
 
-其他问题请联系 admin@acg.blog
+其他问题请联系 admin@kawaii.id

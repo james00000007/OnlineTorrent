@@ -1,4 +1,4 @@
-const trackerURL = ["wss://tracker.acg.blog", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
+const trackerURL = ["wss://tracker.kawaii.id", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
 let webseedPrefix = [];
 
