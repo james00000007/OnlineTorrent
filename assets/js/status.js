@@ -1,3 +1,5 @@
+import * as tools from "./tool-lili.js"
+
 $("#uri").keydown(function (e) {
     if (e.keyCode == "13") {
         e.preventDefault();
@@ -9,7 +11,7 @@ $("#uri").keydown(function (e) {
 initPage();
 
 function initPage() {
-    loadMarkdown();
+    tools.loadMarkdown();
 }
 
 function printStatus(serverURI) {
@@ -19,7 +21,7 @@ function printStatus(serverURI) {
         type: "GET",
         success: function (result) {
             if (result.Torrents == null) {
-                log("服务器上没有种子: " + serverURI);
+                tools.log("服务器上没有种子: " + serverURI);
                 $("#torrent-area").addClass("mdui-hidden");
             } else {
                 result.Torrents.forEach(function (torr) {
@@ -29,7 +31,7 @@ function printStatus(serverURI) {
             }
         },
         error: function (e) {
-            log("获取不到服务器信息: " + serverURI);
+            tools.log("获取不到服务器信息: " + serverURI);
         },
     });
 }
@@ -46,8 +48,8 @@ function addTorrentToList(torr) {
         $("#showinfo")
             .unbind("click")
             .click(function () {
-                $("#download-info").text(filesize(torr.ConnStatus.BytesRead));
-                $("#upload-info").text(filesize(torr.ConnStatus.BytesWritten));
+                $("#download-info").text(tools.filesize(torr.ConnStatus.BytesRead));
+                $("#upload-info").text(tools.filesize(torr.ConnStatus.BytesWritten));
                 $("#peer-info").text(`${torr.TotalPeers} | ${torr.PendingPeers} | ${torr.ActivePeers}`);
                 $("#open-drawer")[0].click();
                 $("#torrent-info")[0].click();
@@ -56,7 +58,7 @@ function addTorrentToList(torr) {
             .unbind("click")
             .click(function () {
                 let urlsuffix = "/?";
-                urlsuffix += `uri=${uriEncode(torr.Magnet)}`;
+                urlsuffix += `uri=${tools.uriEncode(torr.Magnet)}`;
                 // let res = window.location.origin + urlsuffix;
                 window.open(urlsuffix);
             });
@@ -64,18 +66,18 @@ function addTorrentToList(torr) {
             .unbind("click")
             .click(function () {
                 let sURL = $("#uri").val();
-                deleteTorrent(
+                tools.deleteTorrent(
                     torr.Hash,
                     sURL,
                     function (result) {
                         if (result.response == 200) {
-                            log("请求删除成功: " + sURL);
+                            tools.log("请求删除成功: " + sURL);
                         } else {
-                            log("请求删除失败[200]: " + sURL);
+                            tools.log("请求删除失败[200]: " + sURL);
                         }
                     },
                     function (e) {
-                        log("请求删除失败: " + sURL);
+                        tools.log("请求删除失败: " + sURL);
                     }
                 );
                 printStatus(sURL);

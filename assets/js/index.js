@@ -1,3 +1,6 @@
+import * as tools from "./tool-lili.js"
+import * as webtorrent from "./client-lili.js"
+
 const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://us1-server.darknight.tech:16101/", "/"];
 
 const loopTime = 2000;
@@ -26,7 +29,7 @@ $("#upload-torrent").change(function (e) {
 
 $("#upload-submit").click(function (e) {
     if ($("#upload-torrent")[0].files[0] == undefined) {
-        log("还没选择要上传的文件!");
+        tools.log("还没选择要上传的文件!");
         return;
     }
     uploadTorrentToAll($("#upload-torrent")[0].files[0]);
@@ -34,8 +37,8 @@ $("#upload-submit").click(function (e) {
 
 $("#share-button").click(function (e) {
     let urlsuffix = "/?";
-    client.torrents.forEach(function (t) {
-        urlsuffix += `uri=${uriEncode(t.magnetURI)}&`;
+    webtorrent.client.torrents.forEach(function (t) {
+        urlsuffix += `uri=${tools.uriEncode(t.magnetURI)}&`;
     });
     urlsuffix = urlsuffix.substr(0, urlsuffix.length - 1);
     let res = window.location.origin + urlsuffix;
@@ -54,7 +57,7 @@ $("#share-url").click(function (e) {
 initPage();
 
 function initPage() {
-    loadMarkdown();
+    tools.loadMarkdown();
     loadShareURL();
     setProgressBar();
     loadServiceWorker();
@@ -64,7 +67,7 @@ function loadServiceWorker() {
     navigator.serviceWorker.register("/sw.min.js", { scope: "/" }).then((reg) => {
         const worker = reg.active || reg.waiting || reg.installing;
         function checkState(worker) {
-            return worker.state === "activated" && client.loadWorker(worker);
+            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg })
         }
         if (!checkState(worker)) {
             worker.addEventListener("statechange", ({ target }) => checkState(target));
@@ -74,28 +77,28 @@ function loadServiceWorker() {
 
 // 检测url并加载链接
 function loadShareURL() {
-    let mList = getQueryVariable("uri");
+    let mList = tools.getQueryVariable("uri");
     if (mList.length == 0) {
         return;
     }
     mList.forEach(function (strin) {
-        sendURIToAll(uriDecode(strin));
+        sendURIToAll(tools.uriDecode(strin));
     });
 }
 
 function onTorrent(torrent) {
-    log("已获取种子信息");
-    log("种子名: " + torrent.name);
-    log(
+    tools.log("已获取种子信息");
+    tools.log("种子名: " + torrent.name);
+    tools.log(
         "哈希值: " +
-            torrent.infoHash +
-            " " +
-            //  '<a href="' + torrent.magnetURI + '" target="_blank">[磁力链接]</a> ' +
-            '<a href="' +
-            torrent.torrentFileBlobURL +
-            '" target="_blank" download="' +
-            torrent.name +
-            '.torrent">[下载 .torrent]</a>'
+        torrent.infoHash +
+        " " +
+        //  '<a href="' + torrent.magnetURI + '" target="_blank">[磁力链接]</a> ' +
+        '<a href="' +
+        torrent.torrentFileBlobURL +
+        '" target="_blank" download="' +
+        torrent.name +
+        '.torrent">[下载 .torrent]</a>'
     );
 
     // 优先下载首尾，获取播放时长
@@ -106,7 +109,7 @@ function onTorrent(torrent) {
     });
 
     function enableWebseed() {
-        webseedPrefix.forEach((prefix) => {
+        webtorrent.webseedPrefix.forEach((prefix) => {
             let webseedURL;
             if (torrent.files.length == 1 && torrent.files[0].name == torrent.files[0].path) {
                 // 如果这是一个单文件种子, 不带文件夹
@@ -117,7 +120,7 @@ function onTorrent(torrent) {
             }
             torrent.addWebSeed(webseedURL);
         });
-        log("已启用webseed");
+        tools.log("已启用webseed");
     }
 
     $("#enable-webseed").unbind("click").click(enableWebseed);
@@ -129,7 +132,7 @@ function onTorrent(torrent) {
                     torrent.wires[i].destroy();
                 }
             }
-            log("已禁用webseed");
+            tools.log("已禁用webseed");
         });
 
     // 自动启用webseed
@@ -139,7 +142,7 @@ function onTorrent(torrent) {
 
     // Render all files into to the page
     torrent.files.forEach(function (file) {
-        if (isExt(file.name, videoExt)) {
+        if (tools.isExt(file.name, tools.videoExt)) {
             let li = addList(file, function () {
                 $("#video")[0].oncanplay = function () {
                     $("#video").css("aspect-ratio", "");
@@ -157,20 +160,26 @@ function onTorrent(torrent) {
                     li.click();
                 }, 2000);
             }
-        } else if (isExt(file.name, imageExt)) {
+        } else if (tools.isExt(file.name, tools.imageExt)) {
             addList(file, function () {
                 $("#other-file").empty();
                 $("#other-area").removeClass("mdui-hidden");
-                file.appendTo("#other-file");
+                let img = document.createElement("img");
+                file.streamTo(img)
+                document.getElementById("other-file").appendChild(img)
             });
-        } else if (isExt(file.name, audioExt)) {
+        } else if (tools.isExt(file.name, tools.audioExt)) {
             addList(file, function () {
                 $("#other-file").empty();
                 $("#other-area").removeClass("mdui-hidden");
-                file.appendTo("#other-file");
+                // 未检查
+                let audio = document.createElement("audio");
+                audio.setAttribute("controls", "controls");
+                file.streamTo(audio)
+                document.getElementById("other-file").appendChild(audio)
             });
         } else {
-            log(`不支持播放${file.name}, 左侧面板点击 √ 可下载`);
+            tools.log(`不支持播放${file.name}, 左侧面板点击 √ 可下载`);
         }
     });
 }
@@ -234,16 +243,16 @@ function addList(file, clickfunc) {
         clearInterval(printInfo);
         resetProgressBar();
         printInfo = setInterval(function () {
-            $("#download-info").text(getDownloadInfo(file));
-            $("#upload-info").text(getUploadInfo(file));
-            $("#peer-info").text(getPeerInfo(file));
-            $("#progress-info").text(getProgressInfo(file));
+            $("#download-info").text(webtorrent.getDownloadInfo(file));
+            $("#upload-info").text(webtorrent.getUploadInfo(file));
+            $("#peer-info").text(webtorrent.getPeerInfo(file));
+            $("#progress-info").text(webtorrent.getProgressInfo(file));
             updateProgressBar(file);
         }, loopTime);
         $("#delete-torrent")
             .unbind("click")
             .click(function () {
-                deleteTorrentInAll(getFileTorrentHash(file));
+                deleteTorrentInAll(webtorrent.getFileTorrentHash(file));
             });
         $("#peer-info")
             .parent()
@@ -266,10 +275,7 @@ function addList(file, clickfunc) {
                     peerip.append(li);
                 });
             });
-        file.getStreamURL(function (err, url) {
-            if (err) return log(err.message);
-            $("#download-file").attr({ href: url });
-        });
+        $("#download-file").attr({ href: file.streamURL });
         clickfunc();
     });
     $("#file-list").append(li);
@@ -277,26 +283,26 @@ function addList(file, clickfunc) {
 }
 
 function uploadTorrentToAll(file) {
-    log("开始上传文件");
+    tools.log("开始上传文件");
     let okflag = 0;
     for (let i = 0; i < serverURL.length; i++) {
-        uploadTorrent(
+        tools.uploadTorrent(
             file,
             serverURL[i],
             function (result) {
                 if (result.response == 200) {
                     if (okflag == 0) {
                         okflag = 1;
-                        log("torrent 上传成功");
-                        startMagnet(result.magnet, onTorrent);
+                        tools.log("torrent 上传成功");
+                        webtorrent.startMagnet(result.magnet, onTorrent);
                     }
                 } else {
-                    log("torrent 上传失败[200]: " + serverURL[i]);
+                    tools.log("torrent 上传失败[200]: " + serverURL[i]);
                 }
             },
             function (e) {
                 if (okflag == 0) {
-                    log("torrent 上传失败: " + serverURL[i]);
+                    tools.log("torrent 上传失败: " + serverURL[i]);
                 }
             }
         );
@@ -304,54 +310,54 @@ function uploadTorrentToAll(file) {
 }
 
 function sendURIToAll(uri) {
-    log("开始发送请求");
+    tools.log("开始发送请求");
     let okflag = 0;
     for (let i = 0; i < serverURL.length; i++) {
-        sendURI(
+        tools.sendURI(
             uri,
             serverURL[i],
             function (result) {
                 if (result.response == 200) {
                     if (okflag == 0) {
                         okflag = 1;
-                        log("请求发送成功");
-                        log("已添加种子，磁力链接为: " + '<a href="' + result.magnet + '" target="_blank">[磁力链接]</a> ');
-                        startMagnet(result.magnet, onTorrent);
+                        tools.log("请求发送成功");
+                        tools.log("已添加种子，磁力链接为: " + '<a href="' + result.magnet + '" target="_blank">[磁力链接]</a> ');
+                        webtorrent.startMagnet(result.magnet, onTorrent);
                     }
-                    webseedPrefix.push(serverURL[i] + "webseed/");
+                    webtorrent.webseedPrefix.push(serverURL[i] + "webseed/");
                 } else {
-                    log("请求发送失败[200]: " + serverURL[i]);
+                    tools.log("请求发送失败[200]: " + serverURL[i]);
                 }
             },
             function (e) {
                 if (okflag == 0) {
-                    log("请求发送失败: " + serverURL[i]);
+                    tools.log("请求发送失败: " + serverURL[i]);
                 }
             }
         );
     }
     setTimeout(() => {
         if (okflag == 0) {
-            startMagnet(uri, onTorrent);
+            webtorrent.startMagnet(uri, onTorrent);
         }
     }, 5000);
 }
 
 function deleteTorrentInAll(hash) {
-    log("请求删除种子");
+    tools.log("请求删除种子");
     for (let i = 0; i < serverURL.length; i++) {
-        deleteTorrent(
+        tools.deleteTorrent(
             hash,
             serverURL[i],
             function (result) {
                 if (result.response == 200) {
-                    log("请求删除成功: " + serverURL[i]);
+                    tools.log("请求删除成功: " + serverURL[i]);
                 } else {
-                    log("请求删除失败[200]: " + serverURL[i]);
+                    tools.log("请求删除失败[200]: " + serverURL[i]);
                 }
             },
             function (e) {
-                log("请求删除失败: " + serverURL[i]);
+                tools.log("请求删除失败: " + serverURL[i]);
             }
         );
     }

@@ -6,12 +6,13 @@
 
 ### 变化
 
-版本 0.1.0: 详细内容请移步[github](https://github.com/darknightlab/www.kawaii.id)
+版本 0.2.0: 详细内容请移步[github](https://github.com/darknightlab/www.kawaii.id)
 
--   新增了种子详细进度条; 自动开启 webseed;
+-   更新到 webtorrent v2
 
 历史变化:
 
+-   新增了种子详细进度条; 自动开启 webseed;
 -   测试优先下载首尾，减小了播放等待时间
 -   更改依赖，修复了难以获取元数据的问题
 -   新增对部分流媒体格式的支持，[格式列表](/markdown?source=%2Fassets%2Fmd%2Fsupporttable.md)

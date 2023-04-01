@@ -1,3 +1,5 @@
+import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@latest/dist/webtorrent.min.js"
+import * as tools from "./tool-lili.js"
 const trackerURL = ["wss://tracker.kawaii.id", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
 let webseedPrefix = [];
@@ -16,11 +18,11 @@ function startMagnet(magnet, onTorrent) {
 }
 
 function getDownloadInfo(file) {
-    return `${filesize(file._torrent.downloadSpeed)}/S (${filesize(file._torrent.downloaded)})`;
+    return `${tools.filesize(file._torrent.downloadSpeed)}/S (${tools.filesize(file._torrent.downloaded)})`;
 }
 
 function getUploadInfo(file) {
-    return `${filesize(file._torrent.uploadSpeed)}/S (${filesize(file._torrent.uploaded)})`;
+    return `${tools.filesize(file._torrent.uploadSpeed)}/S (${tools.filesize(file._torrent.uploaded)})`;
 }
 
 function getPeerInfo(file) {
@@ -33,4 +35,16 @@ function getProgressInfo(file) {
 
 function getFileTorrentHash(file) {
     return file._torrent.infoHash;
+}
+
+export {
+    trackerURL,
+    webseedPrefix,
+    client,
+    startMagnet,
+    getDownloadInfo,
+    getUploadInfo,
+    getPeerInfo,
+    getProgressInfo,
+    getFileTorrentHash,
 }

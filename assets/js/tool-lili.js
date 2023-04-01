@@ -131,3 +131,21 @@ function deleteTorrent(hash, sURL, success, error) {
         error: error,
     });
 }
+
+export {
+    videoExt,
+    audioExt,
+    imageExt,
+    uriEncode,
+    uriDecode,
+    getQueryVariable,
+    loadMarkdown,
+    getExt,
+    getName,
+    isExt,
+    filesize,
+    log,
+    uploadTorrent,
+    sendURI,
+    deleteTorrent,
+}
