@@ -6,10 +6,16 @@ const imageExt = ["png", "jpg", "jpeg", "webp"];
 
 const md = markdownit();
 
+/**
+ * @deprecated
+ */
 function uriEncode(strin) {
     return strin.replaceAll("?", "%3F").replaceAll("=", "%3D").replaceAll("&", "%26");
 }
 
+/**
+ * @deprecated
+ */
 function uriDecode(strin) {
     return strin.replaceAll("%26", "&").replaceAll("%3D", "=").replaceAll("%3F", "?");
 }
@@ -45,7 +51,7 @@ function loadMarkdown() {
 }
 
 function getExt(filename) {
-    return filename.substr(filename.lastIndexOf(".") + 1);
+    return filename.substring(filename.lastIndexOf(".") + 1);
 }
 
 function getName(filename) {
@@ -53,7 +59,7 @@ function getName(filename) {
 }
 
 function isExt(filename, fileExt) {
-    let ext = filename.substr(filename.lastIndexOf(".") + 1);
+    let ext = filename.substring(filename.lastIndexOf(".") + 1);
     return fileExt.indexOf(ext.toLowerCase()) != -1;
 }
 

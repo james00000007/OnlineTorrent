@@ -10,6 +10,7 @@ const progressBarSplits = 200;
 const defaultEnableWebseed = true;
 
 var printInfo;
+var progressBarAllDone = false;
 
 $("#uri").keydown(function (e) {
     if (e.keyCode == "13") {
@@ -38,16 +39,18 @@ $("#upload-submit").click(function (e) {
 $("#share-button").click(function (e) {
     let urlsuffix = "/?";
     webtorrent.client.torrents.forEach(function (t) {
-        urlsuffix += `uri=${tools.uriEncode(t.magnetURI)}&`;
+        // urlsuffix += `uri=${encodeURIComponent(t.magnetURI)}&`;
+        urlsuffix += `uri=${encodeURIComponent("magnet:?xt=" + t.xt)}&`;
     });
-    urlsuffix = urlsuffix.substr(0, urlsuffix.length - 1);
+    urlsuffix = urlsuffix.substring(0, urlsuffix.length - 1);
     let res = window.location.origin + urlsuffix;
     $("#share-url").val(res);
 });
 
 $("#share-url").click(function (e) {
-    $("#share-url").select();
-    document.execCommand("copy");
+    // $("#share-url").select();
+    // document.execCommand("copy");
+    navigator.clipboard.writeText(document.getElementById("share-url").value);
     mdui.snackbar({
         message: "已复制到剪贴板",
         position: "right-bottom",
@@ -82,7 +85,7 @@ function loadShareURL() {
         return;
     }
     mList.forEach(function (strin) {
-        sendURIToAll(tools.uriDecode(strin));
+        sendURIToAll(decodeURIComponent(strin));
     });
 }
 
@@ -137,7 +140,8 @@ function onTorrent(torrent) {
 
     // 自动启用webseed
     if (defaultEnableWebseed) {
-        enableWebseed();
+        // 30秒后启用webseed, 防止流量爆炸
+        setTimeout(enableWebseed, 30000);
     }
 
     // Render all files into to the page
@@ -197,20 +201,15 @@ function updateProgressBar(file) {
     let startPiece = file._startPiece;
     let endPiece = file._endPiece;
     let piecePerSegment = (endPiece + 1 - startPiece) / progressBarSplits;
-    let pieceNumber = startPiece;
+    // let pieceNumber = startPiece;
     for (let i = 0; i < progressBarSplits; i++) {
         let segment = bar.children.item(i);
         if (segment.classList.contains("progress-color-complete")) {
-            // 如果piecePerSegment<1, 也就是好几个segment都是一个piece, 此时直接用ceil会使pieceNumber > startPiece + piecePerSegment * (i + 1), 造成有部分segment被跳过因此没被上色
-            let newPieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
-            if (newPieceNumber < startPiece + piecePerSegment * (i + 2)) {
-                pieceNumber = newPieceNumber;
-            }
             continue;
         }
         let hasNotReady = false;
         let hasReady = false;
-        while (pieceNumber < startPiece + piecePerSegment * (i + 1)) {
+        for (let pieceNumber = Math.floor(startPiece + piecePerSegment * i); pieceNumber < startPiece + piecePerSegment * (i + 1); pieceNumber++) {
             if (file._torrent.pieces[pieceNumber] == null) {
                 // 说明已经下载完
                 hasReady = true;
@@ -220,18 +219,20 @@ function updateProgressBar(file) {
             if (hasReady && hasNotReady) {
                 break;
             }
-            pieceNumber++;
         }
         if (hasReady && hasNotReady) {
             // 下到一半
             segment.setAttribute("class", "progress-item progress-color-half");
-            pieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
+            // pieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
         } else if (hasReady) {
             // 下完了
             segment.setAttribute("class", "progress-item progress-color-complete");
         } else if (!hasNotReady && !hasReady) {
             // 这种是不可能的
         }
+    }
+    if (file.done) {
+        progressBarAllDone = true;
     }
 }
 
@@ -253,7 +254,9 @@ function addList(file, clickfunc) {
             $("#upload-info").text(webtorrent.getUploadInfo(file));
             $("#peer-info").text(webtorrent.getPeerInfo(file));
             $("#progress-info").text(webtorrent.getProgressInfo(file));
-            updateProgressBar(file);
+            if (!progressBarAllDone) {
+                updateProgressBar(file);
+            }
         }, loopTime);
         $("#delete-torrent")
             .unbind("click")

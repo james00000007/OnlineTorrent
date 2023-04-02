@@ -58,7 +58,7 @@ function addTorrentToList(torr) {
             .unbind("click")
             .click(function () {
                 let urlsuffix = "/?";
-                urlsuffix += `uri=${tools.uriEncode(torr.Magnet)}`;
+                urlsuffix += `uri=${encodeURIComponent(torr.Magnet)}`;
                 // let res = window.location.origin + urlsuffix;
                 window.open(urlsuffix);
             });
