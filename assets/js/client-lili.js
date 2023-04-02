@@ -1,5 +1,6 @@
-import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@latest/dist/webtorrent.min.js"
-import * as tools from "./tool-lili.js"
+// @latest属于高风险策略
+import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@latest/dist/webtorrent.min.js";
+import * as tools from "./tool-lili.js";
 const trackerURL = ["wss://tracker.kawaii.id", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
 let webseedPrefix = [];
@@ -37,14 +38,4 @@ function getFileTorrentHash(file) {
     return file._torrent.infoHash;
 }
 
-export {
-    trackerURL,
-    webseedPrefix,
-    client,
-    startMagnet,
-    getDownloadInfo,
-    getUploadInfo,
-    getPeerInfo,
-    getProgressInfo,
-    getFileTorrentHash,
-}
+export { trackerURL, webseedPrefix, client, startMagnet, getDownloadInfo, getUploadInfo, getPeerInfo, getProgressInfo, getFileTorrentHash };

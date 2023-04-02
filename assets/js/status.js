@@ -1,4 +1,4 @@
-import * as tools from "./tool-lili.js"
+import * as tools from "./tool-lili.js";
 
 $("#uri").keydown(function (e) {
     if (e.keyCode == "13") {

@@ -1,4 +1,4 @@
-import * as tools from "./tool-lili.js"
+import * as tools from "./tool-lili.js";
 
 const markdownURL = decodeURIComponent(tools.getQueryVariable("source")[0]);
 

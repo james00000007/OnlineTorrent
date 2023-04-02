@@ -1,5 +1,5 @@
-import * as tools from "./tool-lili.js"
-import * as webtorrent from "./client-lili.js"
+import * as tools from "./tool-lili.js";
+import * as webtorrent from "./client-lili.js";
 
 const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://us1-server.darknight.tech:16101/", "/"];
 
@@ -67,7 +67,7 @@ function loadServiceWorker() {
     navigator.serviceWorker.register("/sw.min.js", { scope: "/" }).then((reg) => {
         const worker = reg.active || reg.waiting || reg.installing;
         function checkState(worker) {
-            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg })
+            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg });
         }
         if (!checkState(worker)) {
             worker.addEventListener("statechange", ({ target }) => checkState(target));
@@ -91,14 +91,14 @@ function onTorrent(torrent) {
     tools.log("种子名: " + torrent.name);
     tools.log(
         "哈希值: " +
-        torrent.infoHash +
-        " " +
-        //  '<a href="' + torrent.magnetURI + '" target="_blank">[磁力链接]</a> ' +
-        '<a href="' +
-        torrent.torrentFileBlobURL +
-        '" target="_blank" download="' +
-        torrent.name +
-        '.torrent">[下载 .torrent]</a>'
+            torrent.infoHash +
+            " " +
+            //  '<a href="' + torrent.magnetURI + '" target="_blank">[磁力链接]</a> ' +
+            '<a href="' +
+            torrent.torrentFileBlobURL +
+            '" target="_blank" download="' +
+            torrent.name +
+            '.torrent">[下载 .torrent]</a>'
     );
 
     // 优先下载首尾，获取播放时长
@@ -165,8 +165,8 @@ function onTorrent(torrent) {
                 $("#other-file").empty();
                 $("#other-area").removeClass("mdui-hidden");
                 let img = document.createElement("img");
-                file.streamTo(img)
-                document.getElementById("other-file").appendChild(img)
+                file.streamTo(img);
+                document.getElementById("other-file").appendChild(img);
             });
         } else if (tools.isExt(file.name, tools.audioExt)) {
             addList(file, function () {
@@ -175,8 +175,8 @@ function onTorrent(torrent) {
                 // 未检查
                 let audio = document.createElement("audio");
                 audio.setAttribute("controls", "controls");
-                file.streamTo(audio)
-                document.getElementById("other-file").appendChild(audio)
+                file.streamTo(audio);
+                document.getElementById("other-file").appendChild(audio);
             });
         } else {
             tools.log(`不支持播放${file.name}, 左侧面板点击 √ 可下载`);
@@ -201,7 +201,11 @@ function updateProgressBar(file) {
     for (let i = 0; i < progressBarSplits; i++) {
         let segment = bar.children.item(i);
         if (segment.classList.contains("progress-color-complete")) {
-            pieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
+            // 如果piecePerSegment<1, 也就是好几个segment都是一个piece, 此时直接用ceil会使pieceNumber > startPiece + piecePerSegment * (i + 1), 造成有部分segment被跳过因此没被上色
+            let newPieceNumber = Math.ceil(startPiece + piecePerSegment * (i + 1));
+            if (newPieceNumber < startPiece + piecePerSegment * (i + 2)) {
+                pieceNumber = newPieceNumber;
+            }
             continue;
         }
         let hasNotReady = false;
@@ -225,6 +229,8 @@ function updateProgressBar(file) {
         } else if (hasReady) {
             // 下完了
             segment.setAttribute("class", "progress-item progress-color-complete");
+        } else if (!hasNotReady && !hasReady) {
+            // 这种是不可能的
         }
     }
 }
