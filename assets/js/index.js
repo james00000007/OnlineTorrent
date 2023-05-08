@@ -1,7 +1,7 @@
 import * as tools from "./tool-lili.js";
 import * as webtorrent from "./client-lili.js";
 
-const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://us1-server.darknight.tech:16101/", "/"];
+const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "/"];
 
 const loopTime = 2000;
 
