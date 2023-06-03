@@ -12,6 +12,10 @@ $("#uri").keydown(function (e) {
 });
 
 document.getElementById("serverSelect").onchange = function () {
+    let serverSelectInit = document.getElementById("serverSelectInit");
+    if (serverSelectInit != null) {
+        this.removeChild(serverSelectInit);
+    }
     let sURL = this.value;
     printStatus(sURL);
 };
