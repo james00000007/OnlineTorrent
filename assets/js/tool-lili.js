@@ -1,4 +1,4 @@
-const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "/"];
+const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "https://hk1-server.darknight.tech:16101/", "/"];
 
 const videoExt = ["mp4", "ogg", "webm", "mkv", "mov", "3g2", "3gp", "m4v", "m2ts", "ogm", "ogv", "webm"];
 
