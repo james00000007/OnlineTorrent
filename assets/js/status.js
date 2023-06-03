@@ -1,5 +1,6 @@
 import * as tools from "./tool-lili.js";
-import { serverURL } from "./index.js";
+
+const serverURL = tools.serverURL;
 
 // 已经不用了
 $("#uri").keydown(function (e) {

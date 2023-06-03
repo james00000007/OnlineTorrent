@@ -1,3 +1,5 @@
+const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "/"];
+
 const videoExt = ["mp4", "ogg", "webm", "mkv", "mov", "3g2", "3gp", "m4v", "m2ts", "ogm", "ogv", "webm"];
 
 const audioExt = ["mp3", "wav", "flac", "m3u", "aac", "ac3", "eac3", "opus", "vorbis"];
@@ -138,4 +140,4 @@ function deleteTorrent(hash, sURL, success, error) {
     });
 }
 
-export { videoExt, audioExt, imageExt, uriEncode, uriDecode, getQueryVariable, loadMarkdown, getExt, getName, isExt, filesize, log, uploadTorrent, sendURI, deleteTorrent };
+export { serverURL, videoExt, audioExt, imageExt, uriEncode, uriDecode, getQueryVariable, loadMarkdown, getExt, getName, isExt, filesize, log, uploadTorrent, sendURI, deleteTorrent };
