@@ -2,15 +2,6 @@ import * as tools from "./tool-lili.js";
 
 const serverURL = tools.serverURL;
 
-// 已经不用了
-$("#uri").keydown(function (e) {
-    if (e.keyCode == "13") {
-        e.preventDefault();
-        let sURL = $(this).val();
-        printStatus(sURL);
-    }
-});
-
 document.getElementById("serverSelect").onchange = function () {
     let serverSelectInit = document.getElementById("serverSelectInit");
     if (serverSelectInit != null) {
@@ -85,7 +76,7 @@ function addTorrentToList(torr) {
         $("#deletetorrent")
             .unbind("click")
             .click(function () {
-                let sURL = $("#uri").val();
+                let sURL = document.getElementById("serverSelect").value;
                 tools.deleteTorrent(
                     torr.Hash,
                     sURL,
