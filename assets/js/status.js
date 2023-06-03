@@ -1,5 +1,7 @@
 import * as tools from "./tool-lili.js";
+import { serverURL } from "./index.js";
 
+// 已经不用了
 $("#uri").keydown(function (e) {
     if (e.keyCode == "13") {
         e.preventDefault();
@@ -8,10 +10,23 @@ $("#uri").keydown(function (e) {
     }
 });
 
+document.getElementById("serverSelect").onchange = function () {
+    let sURL = this.value;
+    printStatus(sURL);
+};
+
 initPage();
 
 function initPage() {
     tools.loadMarkdown();
+
+    let serverSelect = document.getElementById("serverSelect");
+    serverURL.forEach(function (url) {
+        let option = document.createElement("option");
+        option.value = url;
+        option.innerHTML = url;
+        serverSelect.appendChild(option);
+    });
 }
 
 function printStatus(serverURI) {

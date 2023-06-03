@@ -371,3 +371,5 @@ function deleteTorrentInAll(hash) {
         );
     }
 }
+
+export { serverURL };
