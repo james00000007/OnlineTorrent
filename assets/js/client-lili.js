@@ -1,7 +1,7 @@
 // @latest属于高风险策略
 import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@latest/dist/webtorrent.min.js";
 import * as tools from "./tool-lili.js";
-const trackerURL = ["wss://tracker.kawaii.id", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
+const trackerURL = ["wss://tracker.dnlab.net:16443", "wss://tracker.kawaii.id", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
 let webseedPrefix = [];
 
