@@ -7,7 +7,8 @@ const loopTime = 2000;
 
 const progressBarSplits = 200;
 
-const defaultEnableWebseed = true;
+// const defaultEnableWebseed = true;
+const defaultEnableWebseed = false;
 
 var printInfo;
 var progressBarAllDone = false;

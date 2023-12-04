@@ -1,4 +1,6 @@
-const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "https://hk1-server.darknight.tech:16101/", "/"];
+// const serverURL = ["https://sg1-server.darknight.tech:16101/", "https://cn2-server.darknight.tech:16101/", "https://pku.dnlab.net:16101/", "https://hk1-server.darknight.tech:16101/", "/"];
+
+const serverURL = ["https://torrentserver.projectk.org"];
 
 const videoExt = ["mp4", "ogg", "webm", "mkv", "mov", "3g2", "3gp", "m4v", "m2ts", "ogm", "ogv", "webm"];
 
@@ -106,17 +108,31 @@ function uploadTorrent(file, sURL, success, error) {
     });
 }
 
+// function sendURI(uri, sURL, success, error) {
+//     $.ajax({
+//         type: "POST",
+//         dataType: "json",
+//         url: sURL + "api/add/uri",
+//         contentType: "application/json",
+//         data: JSON.stringify({
+//             Auth: {
+//                 Secret: "canoziia",
+//             },
+//             URI: uri,
+//         }),
+//         success: success,
+//         error: error,
+//     });
+// }
+
 function sendURI(uri, sURL, success, error) {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: sURL + "api/add/uri",
+        url: sURL + "/api/v1/torrents/add",
         contentType: "application/json",
         data: JSON.stringify({
-            Auth: {
-                Secret: "canoziia",
-            },
-            URI: uri,
+            magnetURI: uri,
         }),
         success: success,
         error: error,
