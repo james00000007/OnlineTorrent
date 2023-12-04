@@ -1,3 +1,3 @@
-# www.kawaii.id
+# www.projectk.org
 
-pages of www.kawaii.id
+pages of www.projectk.org

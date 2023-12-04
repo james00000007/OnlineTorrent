@@ -1,5 +1,5 @@
-import * as tools from "./tool-lili.js";
-import * as webtorrent from "./client-lili.js";
+import * as tools from "./tool-kawaii.js";
+import * as webtorrent from "./client-kawaii.js";
 
 const serverURL = tools.serverURL;
 

@@ -1,4 +1,4 @@
-import * as tools from "./tool-lili.js";
+import * as tools from "./tool-kawaii.js";
 
 const serverURL = tools.serverURL;
 

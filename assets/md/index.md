@@ -1,12 +1,12 @@
 # 新年快乐
 
-## 这里是 [kawaii.id](https://www.kawaii.id)
+## 这里是 [projectk.org](https://www.projectk.org)
 
 右上角上传 torrent，或者输入磁力链接、种子下载链接开始使用。在左侧导航栏查看种子当前的下载信息。
 
 ### 变化
 
-版本 0.2.0: 详细内容请移步[github](https://github.com/darknightlab/www.kawaii.id)
+版本 0.2.0: 详细内容请移步[github](https://github.com/darknightlab/www.projectk.org)
 
 -   更新到 webtorrent v2
 
@@ -31,4 +31,4 @@
 -   [Webtorrent](https://github.com/webtorrent/webtorrent)
 -   [anacrolix/torrent](https://github.com/anacrolix/torrent)
 
-其他问题请联系 admin@kawaii.id
+其他问题请联系 admin@projectk.org
