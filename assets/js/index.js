@@ -362,7 +362,7 @@ function deleteTorrentInAll(hash) {
             hash,
             serverURL[i],
             function (result) {
-                if (result.response == 200) {
+                if (result) {
                     tools.log("请求删除成功: " + serverURL[i]);
                 } else {
                     tools.log("请求删除失败[200]: " + serverURL[i]);
