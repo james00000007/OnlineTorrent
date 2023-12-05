@@ -65,6 +65,7 @@ function initPage() {
     loadShareURL();
     setProgressBar();
     loadServiceWorker();
+    document.getElementById("#rereg-sw").addEventListener("click", reregServiceWorker);
     loadBangumiMoe();
 }
 
@@ -101,11 +102,31 @@ function loadBangumiMoe() {
     };
 }
 
+function reregServiceWorker() {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+            for (let registration of registrations) {
+                registration.unregister(); // 卸载 Service Worker
+            }
+
+            loadServiceWorker();
+
+            // caches.keys().then(function(cacheNames) {
+            //     return Promise.all(
+            //         cacheNames.map(function(cacheName) {
+            //             return caches.delete(cacheName);
+            //         })
+            //     );
+            // }).then(loadServiceWorker());
+        });
+    }
+}
+
 function loadServiceWorker() {
-    navigator.serviceWorker.register("/sw.min.js", { scope: "/" }).then((reg) => {
+    navigator.serviceWorker.register("./sw.min.js", { scope: "./" }).then((reg) => {
         const worker = reg.active || reg.waiting || reg.installing;
         function checkState(worker) {
-            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg });
+            return worker.state === "activated" && client.createServer({ controller: reg }) && download();
         }
         if (!checkState(worker)) {
             worker.addEventListener("statechange", ({ target }) => checkState(target));
