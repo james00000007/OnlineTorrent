@@ -78,20 +78,23 @@ function loadBangumiMoe() {
             let torrents = json.torrents;
             for (let i = 0; i < torrents.length; i++) {
                 let torrent = torrents[i];
-                let div = document.createElement("div");
-                div.setAttribute("class", "mdui-list-item mdui-ripple");
-                let div2 = document.createElement("div");
-                div2.setAttribute("class", "mdui-list-item-content");
-                let div3 = document.createElement("div");
-                div3.setAttribute("class", "mdui-list-item-title");
-                div3.setAttribute("magnetURI", torrent.magnet);
-                div3.innerText = torrent.size + " " + torrent.content.length + "文件 | " + torrent.title;
-                div2.appendChild(div3);
-                div.appendChild(div2);
-                document.getElementById("bangumi-list").appendChild(div);
-                div.addEventListener("click", function () {
-                    sendURIToAll(this.children[1].children[0].getAttribute("magnetURI"));
-                });
+                // torrent.size类似xxx.xx MB 或者 xx.xx GB, 2GB以上的种子不要
+                if (torrent.size.indexOf("MB") != -1 || (torrent.size.indexOf("GB") != -1 && parseFloat(torrent.size) < 2)) {
+                    let div = document.createElement("div");
+                    div.setAttribute("class", "mdui-list-item mdui-ripple");
+                    let div2 = document.createElement("div");
+                    div2.setAttribute("class", "mdui-list-item-content");
+                    let div3 = document.createElement("div");
+                    div3.setAttribute("class", "mdui-list-item-title");
+                    div3.setAttribute("magnetURI", torrent.magnet);
+                    div3.innerText = torrent.size + " " + torrent.content.length + "文件 | " + torrent.title;
+                    div2.appendChild(div3);
+                    div.appendChild(div2);
+                    document.getElementById("bangumi-list").appendChild(div);
+                    div.addEventListener("click", function () {
+                        sendURIToAll(this.children[1].children[0].getAttribute("magnetURI"));
+                    });
+                }
             }
         }
         document.getElementById("bangumi-area").classList.remove("mdui-hidden");
