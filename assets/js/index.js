@@ -300,7 +300,8 @@ function uploadTorrentToAll(file) {
             file,
             serverURL[i],
             function (result) {
-                if (result.response == 200) {
+                // if (result.response == 200) {
+                if (result.info) {
                     if (okflag == 0) {
                         okflag = 1;
                         tools.log("torrent 上传成功");
@@ -327,7 +328,8 @@ function sendURIToAll(uri) {
             uri,
             serverURL[i],
             function (result) {
-                if (result.response == 200) {
+                // if (result.response == 200) {
+                if (result.info) {
                     if (okflag == 0) {
                         okflag = 1;
                         tools.log("请求发送成功");
