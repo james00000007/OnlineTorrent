@@ -65,7 +65,7 @@ function initPage() {
     loadShareURL();
     setProgressBar();
     loadServiceWorker();
-    loadBangumiMoe;
+    loadBangumiMoe();
 }
 
 function loadBangumiMoe() {
