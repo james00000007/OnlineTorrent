@@ -143,7 +143,7 @@ function deleteTorrent(hash, sURL, success, error) {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: `${sURL}/api/v1/torrent/delete`,
+        url: `${sURL}/api/v1/torrents/delete`,
         contentType: "application/json",
         data: JSON.stringify({
             hash: hash,
