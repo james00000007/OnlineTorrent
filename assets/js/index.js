@@ -65,7 +65,7 @@ function initPage() {
     loadShareURL();
     setProgressBar();
     loadServiceWorker();
-    document.getElementById("#rereg-sw").addEventListener("click", reregServiceWorker);
+    document.getElementById("rereg-sw").addEventListener("click", reregServiceWorker);
     loadBangumiMoe();
 }
 
@@ -126,7 +126,7 @@ function loadServiceWorker() {
     navigator.serviceWorker.register("./sw.min.js", { scope: "./" }).then((reg) => {
         const worker = reg.active || reg.waiting || reg.installing;
         function checkState(worker) {
-            return worker.state === "activated" && client.createServer({ controller: reg }) && download();
+            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg }) && download();
         }
         if (!checkState(worker)) {
             worker.addEventListener("statechange", ({ target }) => checkState(target));
