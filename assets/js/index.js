@@ -305,7 +305,7 @@ function uploadTorrentToAll(file) {
                     if (okflag == 0) {
                         okflag = 1;
                         tools.log("torrent 上传成功");
-                        webtorrent.startMagnet(result.magnet, onTorrent);
+                        webtorrent.startMagnet(result.magnetURI, onTorrent);
                     }
                 } else {
                     tools.log("torrent 上传失败[200]: " + serverURL[i]);
@@ -333,8 +333,8 @@ function sendURIToAll(uri) {
                     if (okflag == 0) {
                         okflag = 1;
                         tools.log("请求发送成功");
-                        tools.log("已添加种子，磁力链接为: " + '<a href="' + result.magnet + '" target="_blank">[磁力链接]</a> ');
-                        webtorrent.startMagnet(result.magnet, onTorrent);
+                        tools.log("已添加种子，磁力链接为: " + '<a href="' + result.magnetURI + '" target="_blank">[磁力链接]</a> ');
+                        webtorrent.startMagnet(result.magnetURI, onTorrent);
                     }
                     webtorrent.webseedPrefix.push(serverURL[i] + "webseed/");
                 } else {
