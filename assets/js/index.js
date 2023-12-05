@@ -126,7 +126,7 @@ function loadServiceWorker() {
     navigator.serviceWorker.register("./sw.min.js", { scope: "./" }).then((reg) => {
         const worker = reg.active || reg.waiting || reg.installing;
         function checkState(worker) {
-            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg }) && download();
+            return worker.state === "activated" && webtorrent.client.createServer({ controller: reg });
         }
         if (!checkState(worker)) {
             worker.addEventListener("statechange", ({ target }) => checkState(target));
