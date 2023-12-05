@@ -90,7 +90,7 @@ function loadBangumiMoe() {
                 div.appendChild(div2);
                 document.getElementById("bangumi-list").appendChild(div);
                 div.addEventListener("click", function () {
-                    sendURIToAll(this.children[0].children[0].getAttribute("magnetURI"));
+                    sendURIToAll(this.children[1].children[0].getAttribute("magnetURI"));
                 });
             }
         }
