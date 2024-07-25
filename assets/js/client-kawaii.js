@@ -1,11 +1,21 @@
 // @latest属于高风险策略
-import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@2.1.30/dist/webtorrent.min.js";
+import WebTorrent from "https://cdn.jsdelivr.net/npm/webtorrent@2.4.12/dist/webtorrent.min.js";
 import * as tools from "./tool-kawaii.js";
 const trackerURL = ["wss://tracker.dnlab.net:16443", "wss://tracker.projectk.org", "wss://tracker.btorrent.xyz", "wss://tracker.openwebtorrent.com"];
 
 let webseedPrefix = [];
 
-const client = new WebTorrent();
+const client = new WebTorrent({
+    tracker: {
+        rtcConfig: {
+            iceServers: [{
+                'stun.miwifi.com:3478',
+                'stun:stun.l.google.com:19302',
+                'stun:global.stun.twilio.com:3478'
+            }]
+        }
+    }
+});
 
 function startMagnet(magnet, onTorrent) {
     client.add(
