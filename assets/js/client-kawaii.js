@@ -9,7 +9,7 @@ const client = new WebTorrent({
     tracker: {
         rtcConfig: {
             iceServers: [{
-                'stun.miwifi.com:3478',
+                'stun:stun.miwifi.com:3478',
                 'stun:stun.l.google.com:19302',
                 'stun:global.stun.twilio.com:3478'
             }]
