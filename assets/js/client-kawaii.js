@@ -8,13 +8,13 @@ let webseedPrefix = [];
 const client = new WebTorrent({
     tracker: {
         rtcConfig: {
-            iceServers: [{
-                'stun:stun.miwifi.com:3478',
-                'stun:stun.l.google.com:19302',
-                'stun:global.stun.twilio.com:3478'
-            }]
-        }
-    }
+            iceServers: [
+                {
+                    urls: ["stun:stun.miwifi.com:3478", "stun:stun.l.google.com:19302", "stun:global.stun.twilio.com:3478"],
+                },
+            ],
+        },
+    },
 });
 
 function startMagnet(magnet, onTorrent) {
