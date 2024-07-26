@@ -64,7 +64,7 @@ function initPage() {
     tools.loadMarkdown();
     loadShareURL();
     setProgressBar();
-    loadServiceWorker();
+    unregServiceWorker().then(loadServiceWorker());
     document.getElementById("rereg-sw").addEventListener("click", reregServiceWorker);
     loadBangumiMoe();
 }
@@ -102,24 +102,18 @@ function loadBangumiMoe() {
     };
 }
 
-function reregServiceWorker() {
+async function unregServiceWorker() {
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
-                registration.unregister(); // 卸载 Service Worker
-            }
-
-            loadServiceWorker();
-
-            // caches.keys().then(function(cacheNames) {
-            //     return Promise.all(
-            //         cacheNames.map(function(cacheName) {
-            //             return caches.delete(cacheName);
-            //         })
-            //     );
-            // }).then(loadServiceWorker());
-        });
+        let registrations = await navigator.serviceWorker.getRegistrations();
+        for (let registration of registrations) {
+            await registration.unregister(); // 卸载 Service Worker
+        }
     }
+}
+
+async function reregServiceWorker() {
+    await unregServiceWorker();
+    loadServiceWorker();
 }
 
 function loadServiceWorker() {
