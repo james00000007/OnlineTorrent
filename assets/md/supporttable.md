@@ -1,6 +1,6 @@
 ## 下面给出了一些支持的流媒体格式和对应浏览器
 
-### 20220929: 喜报, chrome 添加了对 hevc 的支持, 可以直接观看 hevc 视频. 等待 Webtorrent 项目更新文档
+### 喜报, chrome 添加了对 hevc 的支持, 可以直接观看 hevc 视频. 等待 Webtorrent 项目更新文档
 
 来源: [Webtorrent](https://github.com/webtorrent/webtorrent/blob/master/docs/api.md)
 
